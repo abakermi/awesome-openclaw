@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reduce Your OpenClaw AI Costs by 97% — Token Optimization Guide</title>
+<meta name="description" content="Go from $1,500+/month to under $50/month on OpenClaw API costs. Real data, embedded sources, community techniques. Session init, model routing, Ollama heartbeats, prompt caching.">
+<meta property="og:title" content="Reduce Your OpenClaw AI Costs by 97% — Token Optimization Guide">
+<meta property="og:description" content="Go from $1,500+/month to under $50/month. Real user data, community techniques, six config-level optimizations.">
+<meta property="og:image" content="https://raw.githubusercontent.com/rohitg00/awesome-openclaw/main/og-image.png">
+<meta property="og:url" content="https://openclawsearch.com/blog/token-optimization">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reduce Your OpenClaw AI Costs by 97%">
+<meta name="twitter:description" content="Real data on OpenClaw costs. From $1,500+/month to under $50. Six optimizations.">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/rohitg00/awesome-openclaw/main/og-image.png">
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text-dark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#0A0A0A;--bg-s1:#111111;--bg-s2:#1A1A1A;
+--text:#EDEDED;--text-muted:#888888;
+--card:rgba(255,255,255,0.05);--card-border:rgba(255,255,255,0.08);
+--primary:#DC2626;--primary-light:#EF4444;
+--code-bg:rgba(255,255,255,0.06);
+--table-header:rgba(220,38,38,0.08);
+--table-row-hover:rgba(255,255,255,0.03);
+--table-stripe:rgba(255,255,255,0.015);
+--link:#EF4444;--link-hover:#DC2626;
+--badge-bg:rgba(220,38,38,0.12);--badge-text:#EF4444;
+--scrollbar-track:rgba(255,255,255,0.02);--scrollbar-thumb:rgba(255,255,255,0.1);
+--nav-bg:rgba(10,10,10,0.8);
+--green:#22C55E;--green-bg:rgba(34,197,94,0.08);--green-border:rgba(34,197,94,0.25);
+--yellow:#F59E0B;--yellow-bg:rgba(245,158,11,0.08);--yellow-border:rgba(245,158,11,0.25);
+--blue:#3B82F6;--blue-bg:rgba(59,130,246,0.08);--blue-border:rgba(59,130,246,0.25);
+}
+[data-theme="light"]{
+--bg:#FAFAFA;--bg-s1:#FFFFFF;--bg-s2:#F5F5F5;
+--text:#171717;--text-muted:#666666;
+--card:#FFFFFF;--card-border:rgba(0,0,0,0.08);
+--code-bg:rgba(0,0,0,0.04);
+--table-header:rgba(220,38,38,0.06);
+--table-row-hover:rgba(0,0,0,0.02);
+--table-stripe:rgba(0,0,0,0.015);
+--link:#DC2626;--link-hover:#B91C1C;
+--badge-bg:rgba(220,38,38,0.08);--badge-text:#DC2626;
+--scrollbar-track:rgba(0,0,0,0.02);--scrollbar-thumb:rgba(0,0,0,0.12);
+--nav-bg:rgba(250,250,250,0.85);
+--green-bg:rgba(34,197,94,0.06);--green-border:rgba(34,197,94,0.2);
+--yellow-bg:rgba(245,158,11,0.06);--yellow-border:rgba(245,158,11,0.2);
+--blue-bg:rgba(59,130,246,0.06);--blue-border:rgba(59,130,246,0.2);
+}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:16px;transition:background .3s,color .3s}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--scrollbar-track)}
+::-webkit-scrollbar-thumb{background:var(--scrollbar-thumb);border-radius:4px}
+
+.nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--card-border);transition:background .3s}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:64px}
+.nav-logo{font-weight:800;font-size:1.1rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav-logo .claw{color:var(--primary)}
+.nav-actions{display:flex;align-items:center;gap:12px}
+.nav-link{color:var(--text-muted);text-decoration:none;font-size:.85rem;font-weight:500;padding:6px 14px;border-radius:8px;border:1px solid var(--card-border);transition:all .2s}
+.nav-link:hover,.nav-link.active{color:var(--text);border-color:var(--primary)}
+.theme-toggle{background:var(--card);border:1px solid var(--card-border);color:var(--text);cursor:pointer;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all .2s}
+.theme-toggle:hover{border-color:var(--primary)}
+.gh-link{color:var(--text-muted);text-decoration:none;font-size:.85rem;font-weight:500;padding:6px 14px;border-radius:8px;border:1px solid var(--card-border);transition:all .2s;display:flex;align-items:center;gap:6px}
+.gh-link:hover{color:var(--text);border-color:var(--primary)}
+.gh-link svg{width:16px;height:16px;fill:currentColor}
+
+.article{max-width:780px;margin:0 auto;padding:0 24px 80px}
+.article-header{padding:80px 0 48px;border-bottom:1px solid var(--card-border);margin-bottom:48px}
+.article-badge{display:inline-flex;align-items:center;gap:6px;background:var(--badge-bg);color:var(--badge-text);font-size:.8rem;font-weight:600;padding:4px 14px;border-radius:16px;margin-bottom:20px}
+.article-title{font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-0.03em;line-height:1.15;margin-bottom:16px}
+.article-title .hl{color:var(--primary)}
+.article-subtitle{font-size:1.2rem;color:var(--text-muted);margin-bottom:24px;line-height:1.5}
+.article-meta{display:flex;flex-wrap:wrap;align-items:center;gap:16px;color:var(--text-muted);font-size:.85rem}
+.article-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.article-pill{font-size:.75rem;padding:4px 12px;border-radius:6px;background:var(--card);border:1px solid var(--card-border);color:var(--text-muted);font-weight:500}
+
+.article h2{font-size:1.6rem;font-weight:800;letter-spacing:-0.02em;margin:56px 0 20px;padding-left:16px;border-left:4px solid var(--primary);line-height:1.3}
+.article h3{font-size:1.2rem;font-weight:700;margin:36px 0 14px;color:var(--text)}
+.article h4{font-size:1.05rem;font-weight:600;margin:28px 0 10px}
+.article p{color:var(--text-muted);margin-bottom:18px;line-height:1.8}
+.article strong{color:var(--text);font-weight:600}
+.article a{color:var(--link);text-decoration:none;transition:color .2s}
+.article a:hover{color:var(--link-hover);text-decoration:underline}
+.article ul,.article ol{margin:0 0 20px 24px;color:var(--text-muted)}
+.article li{margin-bottom:8px;line-height:1.7}
+.article li strong{color:var(--text)}
+
+.article code{font-family:'JetBrains Mono',monospace;font-size:.85em;background:var(--code-bg);padding:2px 6px;border-radius:4px;color:var(--primary-light)}
+.article pre{position:relative;margin:20px 0 28px;border-radius:12px;background:var(--bg-s2);border:1px solid var(--card-border);overflow-x:auto}
+.article pre code{display:block;padding:20px;background:none;color:var(--text);line-height:1.6;font-size:.85rem}
+.article pre code.hljs{background:none;padding:20px}
+.code-label{position:absolute;top:0;left:0;background:var(--card);border-bottom:1px solid var(--card-border);border-right:1px solid var(--card-border);border-radius:0 0 8px 0;padding:4px 12px;font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:.05em}
+.copy-btn{position:absolute;top:8px;right:8px;background:var(--card);border:1px solid var(--card-border);color:var(--text-muted);cursor:pointer;padding:4px 10px;border-radius:6px;font-size:.75rem;font-family:inherit;transition:all .2s;z-index:2}
+.copy-btn:hover{color:var(--text);border-color:var(--primary)}
+.copy-btn.copied{color:var(--primary);border-color:var(--primary)}
+
+.table-wrap{overflow-x:auto;margin:20px 0 28px;border-radius:12px;border:1px solid var(--card-border);background:var(--bg-s1)}
+.article table{width:100%;border-collapse:collapse;font-size:.9rem}
+.article thead{background:var(--table-header)}
+.article th{text-align:left;padding:12px 16px;font-weight:600;color:var(--text);white-space:nowrap;border-bottom:1px solid var(--card-border)}
+.article td{padding:10px 16px;border-bottom:1px solid var(--card-border);color:var(--text-muted)}
+.article tr:last-child td{border-bottom:none}
+.article tbody tr:nth-child(even){background:var(--table-stripe)}
+.article tbody tr:hover{background:var(--table-row-hover)}
+
+.callout{margin:24px 0;padding:20px 24px;border-radius:12px;border:1px solid var(--card-border);background:var(--bg-s1)}
+.callout-problem{border-color:rgba(220,38,38,0.25);background:rgba(220,38,38,0.04)}
+.callout-solution{border-color:var(--green-border);background:var(--green-bg)}
+.callout-tip{border-color:var(--yellow-border);background:var(--yellow-bg)}
+.callout-info{border-color:var(--blue-border);background:var(--blue-bg)}
+.callout-title{font-weight:700;font-size:.9rem;margin-bottom:8px;color:var(--text);display:flex;align-items:center;gap:8px}
+.callout p{margin-bottom:0;font-size:.9rem}
+.callout p+p{margin-top:10px}
+.callout a{color:var(--link)}
+
+.comparison{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+.comparison-col{padding:20px;border-radius:12px;border:1px solid var(--card-border);background:var(--bg-s1)}
+.comparison-col.before{border-color:rgba(220,38,38,0.2)}
+.comparison-col.after{border-color:var(--green-border)}
+.comparison-col h4{font-size:.85rem;font-weight:700;margin:0 0 12px;text-transform:uppercase;letter-spacing:.05em}
+.comparison-col.before h4{color:#EF4444}
+.comparison-col.after h4{color:var(--green)}
+.comparison-col ul{margin:0;padding:0;list-style:none}
+.comparison-col li{font-size:.85rem;color:var(--text-muted);padding:4px 0;line-height:1.5}
+
+.impact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:24px 0}
+.impact-card{padding:20px;border-radius:12px;border:1px solid var(--card-border);background:var(--bg-s1);text-align:center}
+.impact-val{font-size:1.8rem;font-weight:900;color:var(--primary);margin-bottom:4px}
+.impact-label{font-size:.8rem;color:var(--text-muted);font-weight:500}
+
+.tweet-embed{margin:24px 0;padding:24px;border-radius:12px;border:1px solid var(--card-border);background:var(--bg-s1);position:relative}
+.tweet-embed::before{content:'';position:absolute;top:24px;left:24px;width:32px;height:32px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23888' d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z'/%3E%3C/svg%3E");background-size:contain;background-repeat:no-repeat;opacity:.5}
+.tweet-embed .tweet-author{margin-left:44px;margin-bottom:14px}
+.tweet-embed .tweet-name{font-weight:700;font-size:.95rem;color:var(--text)}
+.tweet-embed .tweet-handle{font-size:.8rem;color:var(--text-muted)}
+.tweet-embed .tweet-body{font-size:.95rem;color:var(--text-muted);line-height:1.7;margin-bottom:14px}
+.tweet-embed .tweet-body strong{color:var(--text)}
+.tweet-embed .tweet-date{font-size:.75rem;color:var(--text-muted)}
+.tweet-embed .tweet-link{display:inline-flex;align-items:center;gap:4px;font-size:.8rem;color:var(--link);text-decoration:none;margin-left:8px}
+.tweet-embed .tweet-link:hover{text-decoration:underline}
+.tweet-embed .tweet-stats{display:flex;gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid var(--card-border)}
+.tweet-embed .tweet-stat{font-size:.8rem;color:var(--text-muted);display:flex;align-items:center;gap:4px}
+
+.source-ref{margin:16px 0;padding:14px 18px;border-radius:10px;border:1px solid var(--card-border);background:var(--bg-s1);display:flex;align-items:flex-start;gap:12px;font-size:.85rem;color:var(--text-muted);transition:border-color .2s}
+.source-ref:hover{border-color:rgba(220,38,38,0.3)}
+.source-ref .source-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+.source-ref .source-title{font-weight:600;color:var(--text);margin-bottom:2px}
+.source-ref .source-url{font-size:.75rem;color:var(--text-muted);word-break:break-all}
+.source-ref a{color:inherit;text-decoration:none}
+.source-ref a:hover .source-title{color:var(--link)}
+
+.checklist{margin:24px 0;padding:24px;border-radius:12px;border:1px solid var(--card-border);background:var(--bg-s1)}
+.checklist h3{margin:0 0 16px;font-size:1rem}
+.checklist-group{margin-bottom:20px}
+.checklist-group:last-child{margin-bottom:0}
+.checklist-group-title{font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em}
+.checklist-item{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:.9rem;color:var(--text-muted)}
+.checklist-box{width:18px;height:18px;border:2px solid var(--card-border);border-radius:4px;flex-shrink:0;margin-top:2px}
+
+.toc{margin:32px 0;padding:24px;border-radius:12px;border:1px solid var(--card-border);background:var(--bg-s1)}
+.toc-title{font-size:.9rem;font-weight:700;margin-bottom:12px;color:var(--text);text-transform:uppercase;letter-spacing:.04em}
+.toc-list{list-style:none;margin:0;padding:0}
+.toc-list li{margin-bottom:6px}
+.toc-list a{color:var(--text-muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:color .2s}
+.toc-list a:hover{color:var(--primary)}
+.toc-list a .num{color:var(--primary);font-weight:700;margin-right:8px;font-family:'JetBrains Mono',monospace;font-size:.8rem}
+
+.pricing-table .highlight-row{background:rgba(34,197,94,0.06)}
+.pricing-table .highlight-row td{color:var(--green);font-weight:600}
+
+.article hr{border:none;height:1px;background:var(--card-border);margin:48px 0}
+
+.footer{text-align:center;padding:48px 24px;border-top:1px solid var(--card-border);color:var(--text-muted);font-size:.85rem}
+.footer a{color:var(--link);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+.footer-logo{font-weight:800;font-size:1.2rem;margin-bottom:8px;color:var(--text)}
+.footer-logo .claw{color:var(--primary)}
+
+.back-to-top{position:fixed;bottom:24px;right:24px;z-index:50;width:44px;height:44px;border-radius:12px;background:var(--primary);color:#fff;border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(220,38,38,0.3);opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+.back-to-top.show{opacity:1;transform:none;pointer-events:auto}
+.back-to-top:hover{background:var(--primary-light);transform:translateY(-2px)}
+
+.reading-progress{position:fixed;top:64px;left:0;height:3px;background:var(--primary);z-index:99;transition:width .1s linear;width:0}
+
+@media(max-width:768px){
+.nav-inner{padding:0 10px;gap:6px}
+.nav-actions{gap:6px}
+.nav-link{padding:4px 8px;font-size:.75rem}
+.theme-toggle{width:30px;height:30px;font-size:.9rem}
+.gh-link{padding:4px 8px;gap:4px}
+.gh-link span{display:none}
+.article{padding:0 16px 40px}
+.article-header{padding:48px 0 32px}
+.article-title{font-size:1.8rem}
+.article-subtitle{font-size:1rem}
+.article h2{font-size:1.3rem}
+.comparison{grid-template-columns:1fr}
+.impact-grid{grid-template-columns:repeat(2,1fr)}
+.tweet-embed{padding:16px}
+.tweet-embed::before{width:24px;height:24px;top:16px;left:16px}
+.tweet-embed .tweet-author{margin-left:36px}
+}
+</style>
+</head>
+<body>
+
+<div class="reading-progress" id="readingProgress"></div>
+
+<nav class="nav"><div class="nav-inner">
+<a href="../index.html" class="nav-logo"><span class="claw">Open</span>Claw</a>
+<div class="nav-actions">
+<a href="../index.html" class="nav-link">Home</a>
+<a href="../directory.html" class="nav-link">Directory</a>
+<a href="../blog.html" class="nav-link active">Blog</a>
+<button class="theme-toggle" id="themeToggle" title="Toggle theme"><span id="themeIcon">&#x263E;</span></button>
+<a href="https://github.com/rohitg00/awesome-openclaw" target="_blank" rel="noopener" class="gh-link"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>GitHub</span></a>
+</div>
+</div></nav>
+
+<article class="article">
+
+<header class="article-header">
+<div class="article-badge">Guide</div>
+<h1 class="article-title">Reduce Your OpenClaw AI Costs by <span class="hl">97%</span></h1>
+<p class="article-subtitle">From $1,500+/month to under $50/month. Real user data, community-tested techniques, and six config-level optimizations you can implement in an afternoon.</p>
+<div class="article-meta">
+<span>Originally by ScaleUP Media / @mattganzak</span>
+<span>Feb 2026</span>
+<span>15 min read</span>
+</div>
+<div class="article-pills">
+<span class="article-pill">Token Optimization</span>
+<span class="article-pill">Cost Reduction</span>
+<span class="article-pill">Model Routing</span>
+<span class="article-pill">Prompt Caching</span>
+<span class="article-pill">Ollama</span>
+</div>
+</header>
+
+<div class="impact-grid">
+<div class="impact-card"><div class="impact-val">97%</div><div class="impact-label">Token Reduction</div></div>
+<div class="impact-card"><div class="impact-val">~$50</div><div class="impact-label">Target Monthly Cost</div></div>
+<div class="impact-card"><div class="impact-val">$0</div><div class="impact-label">Local Heartbeat</div></div>
+<div class="impact-card"><div class="impact-val">90%</div><div class="impact-label">Cache Discount</div></div>
+</div>
+
+<nav class="toc">
+<div class="toc-title">What's Inside</div>
+<ol class="toc-list">
+<li><a href="#reality"><span class="num">00</span>The Real Cost Numbers</a></li>
+<li><a href="#hidden"><span class="num">01</span>The Hidden 93.5% Token Waste Bug</a></li>
+<li><a href="#session"><span class="num">02</span>Session Initialization</a></li>
+<li><a href="#routing"><span class="num">03</span>Model Routing</a></li>
+<li><a href="#heartbeat"><span class="num">04</span>Heartbeat to Ollama</a></li>
+<li><a href="#limits"><span class="num">05</span>Rate Limits & Budgets</a></li>
+<li><a href="#caching"><span class="num">06</span>Prompt Caching</a></li>
+<li><a href="#monitoring"><span class="num">07</span>Monitoring & Observability</a></li>
+<li><a href="#checklist"><span class="num">08</span>Quick Reference Checklist</a></li>
+</ol>
+</nav>
+
+<h2 id="reality">The Real Cost Numbers</h2>
+
+<p>Before diving into optimizations, let's look at what people are actually spending. The OpenClaw software is free and MIT-licensed. The cost is in the API calls.</p>
+
+<div class="tweet-embed">
+<div class="tweet-author">
+<div class="tweet-name">Federico Viticci</div>
+<div class="tweet-handle">@viticci</div>
+</div>
+<div class="tweet-body">
+I burned through <strong>180 million tokens</strong> in my first month with OpenClaw. That's roughly <strong>$3,600</strong> in API costs.
+</div>
+<div class="tweet-date">Jan 2026 <a href="https://serenitiesai.com/articles/clawdbot-cost" class="tweet-link" target="_blank" rel="noopener">Source &rarr;</a></div>
+</div>
+
+<p>This isn't an outlier. Here's what real users report:</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Usage Level</th><th>Monthly Cost</th><th>Tokens/Month</th></tr></thead>
+<tbody>
+<tr><td>Light (1-2 hrs/day, simple tasks)</td><td>$10-30</td><td>~5M</td></tr>
+<tr><td>Regular (daily development)</td><td>$40-80</td><td>~20M</td></tr>
+<tr><td>Power user (complex automations)</td><td>$100-200</td><td>~50M</td></tr>
+<tr><td>Extreme (Federico Viticci)</td><td>$3,600</td><td>180M</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="source-ref">
+<span class="source-icon">&#128279;</span>
+<div><a href="https://dev.to/thegdsks/i-tried-the-free-ai-agent-with-124k-github-stars-heres-my-500-reality-check-2885" target="_blank" rel="noopener"><div class="source-title">I Tried OpenClaw, The 'Free' AI Agent. Here's My $500 Reality Check</div><div class="source-url">dev.to/thegdsks</div></a></div>
+</div>
+
+<p>90% of users spend under $12/day. But the tail is long. One misconfigured heartbeat can burn $50/day. An automation loop left running overnight can rack up $200-500.</p>
+
+<p>The optimizations below target specific cost drivers. Each one is independent. Start with the one that matches your biggest spending category.</p>
+
+<h3>Current Claude API Pricing (Feb 2026)</h3>
+
+<div class="table-wrap pricing-table">
+<table>
+<thead><tr><th>Model</th><th>Input (per 1M tokens)</th><th>Output (per 1M tokens)</th><th>Best For</th></tr></thead>
+<tbody>
+<tr><td><strong>Opus 4.5</strong></td><td>$5.00</td><td>$25.00</td><td>Complex reasoning, architecture</td></tr>
+<tr><td><strong>Sonnet 4.5</strong></td><td>$3.00</td><td>$15.00</td><td>General development, code review</td></tr>
+<tr class="highlight-row"><td><strong>Haiku 4.5</strong></td><td>$1.00</td><td>$5.00</td><td>Routine tasks, status checks</td></tr>
+<tr><td>Gemini Flash-Lite</td><td>$0.50</td><td>$0.50</td><td>Heartbeats, pings</td></tr>
+<tr><td>DeepSeek V3.2</td><td>$0.30</td><td>$1.20</td><td>Simple completions</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="source-ref">
+<span class="source-icon">&#128279;</span>
+<div><a href="https://www.metacto.com/blogs/anthropic-api-pricing-a-full-breakdown-of-costs-and-integration" target="_blank" rel="noopener"><div class="source-title">Anthropic API Pricing 2026: Complete Cost Breakdown</div><div class="source-url">metacto.com</div></a></div>
+</div>
+
+<p>The gap between Sonnet and Haiku is <strong>3x on input, 3x on output</strong>. For tasks that don't need Sonnet's reasoning, you're paying triple for nothing. And DeepSeek V3 is <strong>1/100th the cost</strong> of frontier models for simple tasks.</p>
+
+<hr>
+
+<h2 id="hidden">The Hidden 93.5% Token Waste Bug</h2>
+
+<p>This is the single biggest cost driver most users don't know about.</p>
+
+<div class="callout callout-problem">
+<div class="callout-title">GitHub Issue #9157</div>
+<p>OpenClaw currently injects workspace files (AGENTS.md, SOUL.md, USER.md, etc.) into the system prompt on <strong>every single message</strong>. That's ~35,600 tokens per message, $1.51 wasted per 100-message session, and <strong>93.5% of your token budget on static content that never changes</strong>.</p>
+<p><a href="https://github.com/openclaw/openclaw/issues/9157" target="_blank" rel="noopener">View Issue #9157 &rarr;</a></p>
+</div>
+
+<p>There's a proposed fix: a config option to change injection from "always" to "first-message-only." Until it ships, the session initialization technique below is your workaround.</p>
+
+<div class="source-ref">
+<span class="source-icon">&#128279;</span>
+<div><a href="https://github.com/openclaw/openclaw/discussions/10234" target="_blank" rel="noopener"><div class="source-title">Strategies to trim/optimize System Prompt (Discussion #10234)</div><div class="source-url">github.com/openclaw/openclaw/discussions</div></a></div>
+</div>
+
+<p>The community is actively working on this. But right now, the workaround is straightforward: tell your agent exactly what to load.</p>
+
+<hr>
+
+<h2 id="session">Part 1: Session Initialization</h2>
+
+<div class="callout callout-problem">
+<div class="callout-title">The Problem</div>
+<p>Your agent loads 50KB of history on every message. This wastes 2-3M tokens per session and costs $4/day. Third-party interfaces without built-in session clearing make this worse.</p>
+</div>
+
+<p>One user reported their main session occupied <strong>56-58% of the 400K context window</strong> &mdash; over 200K tokens consumed before they typed a single word.</p>
+
+<div class="source-ref">
+<span class="source-icon">&#128279;</span>
+<div><a href="https://help.apiyi.com/en/openclaw-token-cost-optimization-guide-en.html" target="_blank" rel="noopener"><div class="source-title">Why is OpenClaw so token-intensive? (Apiyi.com)</div><div class="source-url">help.apiyi.com</div></a></div>
+</div>
+
+<h3>The Fix</h3>
+
+<p>Add this session initialization rule to your agent's system prompt. It tells the agent exactly what to load and what to skip:</p>
+
+<pre><code class="language-yaml">SESSION INITIALIZATION RULE:
+
+On every session start:
+1. Load ONLY these files:
+   - SOUL.md
+   - USER.md
+   - IDENTITY.md
+   - memory/YYYY-MM-DD.md (if it exists)
+
+2. DO NOT auto-load:
+   - MEMORY.md
+   - Session history
+   - Prior messages
+   - Previous tool outputs
+
+3. When user asks about prior context:
+   - Use memory_search() on demand
+   - Pull only the relevant snippet with memory_get()
+   - Don't load the whole file
+
+4. Update memory/YYYY-MM-DD.md at end of session with:
+   - What you worked on
+   - Decisions made
+   - Leads generated
+   - Blockers
+   - Next steps</code></pre>
+
+<h3>Why It Works</h3>
+
+<p>Session starts with 8KB instead of 50KB. History loads only when asked. Daily notes become your actual memory. Works with any interface.</p>
+
+<div class="callout callout-tip">
+<div class="callout-title">Pro Tip: Fresh Sessions</div>
+<p>Use the <code>/new</code> command to start fresh sessions regularly. Run diagnostic commands in isolated sessions to prevent context bloat in your main workspace. The OpenClaw <a href="https://docs.openclaw.ai/concepts/session" target="_blank" rel="noopener">session management docs</a> cover compaction and pruning strategies in detail.</p>
+</div>
+
+<div class="comparison">
+<div class="comparison-col before">
+<h4>Before</h4>
+<ul>
+<li>50KB context on startup</li>
+<li>2-3M tokens wasted per session</li>
+<li>$0.40 per session</li>
+<li>History bloat over time</li>
+</ul>
+</div>
+<div class="comparison-col after">
+<h4>After</h4>
+<ul>
+<li>8KB context on startup</li>
+<li>Only loads what's needed</li>
+<li>$0.05 per session</li>
+<li>Clean daily memory files</li>
+</ul>
+</div>
+</div>
+
+<hr>
+
+<h2 id="routing">Part 2: Model Routing</h2>
+
+<p>Out of the box, OpenClaw defaults to Sonnet for everything. Sonnet is excellent. It's also overkill for checking file status, running simple commands, or routine monitoring.</p>
+
+<p>This is the single highest-impact optimization. Users report <strong>50-80% savings</strong> from model routing alone.</p>
+
+<div class="tweet-embed">
+<div class="tweet-author">
+<div class="tweet-name">Zen Van Riel</div>
+<div class="tweet-handle">@zenvanriel</div>
+</div>
+<div class="tweet-body">
+Smart model routing cut my OpenClaw costs by <strong>60%</strong>. Route simple tasks to Haiku or Gemini Flash-Lite. Reserve Sonnet for real work. The difference between $0.003/1K tokens and $0.0005/1K is <strong>6x</strong>.
+</div>
+<div class="tweet-date">Jan 2026 <a href="https://zenvanriel.nl/ai-engineer-blog/openclaw-api-cost-optimization-guide/" class="tweet-link" target="_blank" rel="noopener">Source &rarr;</a></div>
+</div>
+
+<h3>Step 1: Update Your Config</h3>
+
+<p>Your OpenClaw config file lives at <code>~/.openclaw/openclaw.json</code>:</p>
+
+<pre><code class="language-json">{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-haiku-4-5"
+      },
+      "models": {
+        "anthropic/claude-sonnet-4-5": {
+          "alias": "sonnet"
+        },
+        "anthropic/claude-haiku-4-5": {
+          "alias": "haiku"
+        }
+      }
+    }
+  }
+}</code></pre>
+
+<p>This sets Haiku as the default and creates aliases so your prompts can say "use sonnet" or "use haiku" to switch on-demand.</p>
+
+<h3>Step 2: Add Routing Rules to System Prompt</h3>
+
+<pre><code class="language-yaml">MODEL SELECTION RULE:
+
+Default: Always use Haiku
+Switch to Sonnet ONLY when:
+- Architecture decisions
+- Production code review
+- Security analysis
+- Complex debugging/reasoning
+- Strategic multi-project decisions
+
+When in doubt: Try Haiku first.</code></pre>
+
+<div class="callout callout-info">
+<div class="callout-title">OpenRouter Auto Model</div>
+<p>If you want automated routing, <a href="https://openrouter.ai/docs/guides/guides/openclaw-integration" target="_blank" rel="noopener">OpenRouter's Auto Model</a> (<code>openrouter/openrouter/auto</code>) automatically selects the most cost-effective model for each request. There's also a <a href="https://github.com/openclaw/openclaw/issues/10969" target="_blank" rel="noopener">proposed middleware hook</a> (Issue #10969) for dynamic model routing based on message classification.</p>
+</div>
+
+<h3>The Ultra-Cheap Tier</h3>
+
+<p>For tasks that barely need intelligence (heartbeats, pings, simple lookups), you can go even cheaper than Haiku:</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Model</th><th>Cost per 1M tokens</th><th>vs Opus</th></tr></thead>
+<tbody>
+<tr><td>Gemini Flash-Lite</td><td>$0.50</td><td>60x cheaper</td></tr>
+<tr><td>DeepSeek V3.2</td><td>$0.53</td><td>56x cheaper</td></tr>
+<tr><td>GPT-4o-mini</td><td>$0.60</td><td>50x cheaper</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="source-ref">
+<span class="source-icon">&#128279;</span>
+<div><a href="https://velvetshark.com/openclaw-multi-model-routing" target="_blank" rel="noopener"><div class="source-title">Stop overpaying for OpenClaw: Multi-model routing guide</div><div class="source-url">velvetshark.com</div></a></div>
+</div>
+
+<div class="comparison">
+<div class="comparison-col before">
+<h4>Before</h4>
+<ul>
+<li>Sonnet for everything</li>
+<li>$3.00 per 1M input tokens</li>
+<li>Overkill for simple tasks</li>
+<li>$50-70/month on models</li>
+</ul>
+</div>
+<div class="comparison-col after">
+<h4>After</h4>
+<ul>
+<li>Haiku by default, Sonnet when needed</li>
+<li>$1.00 per 1M input tokens</li>
+<li>Right model for the job</li>
+<li>$5-15/month on models</li>
+</ul>
+</div>
+</div>
+
+<hr>
+
+<h2 id="heartbeat">Part 3: Heartbeat to Ollama</h2>
+
+<p>OpenClaw sends periodic heartbeat checks to verify your agent is running. By default, these use your paid API. Running 24/7, that's real money for a health check.</p>
+
+<div class="callout callout-problem">
+<div class="callout-title">Real Case</div>
+<p>One user set email checks every 5 minutes via heartbeat. Each heartbeat included the full session context. Result: <strong>$50/day</strong> from heartbeats alone.</p>
+<p><a href="https://gist.github.com/digitalknk/ec360aab27ca47cb4106a183b2c25a98" target="_blank" rel="noopener">Source: Running OpenClaw Without Burning Money (GitHub Gist)</a></p>
+</div>
+
+<p>The fix: route heartbeats to a free local LLM using Ollama. This is <a href="https://docs.openclaw.ai/providers/ollama" target="_blank" rel="noopener">fully documented</a> in the OpenClaw docs.</p>
+
+<h3>Step 1: Install Ollama</h3>
+
+<pre><code class="language-bash"># macOS / Linux
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# Pull a lightweight model for heartbeats
+ollama pull llama3.2:3b</code></pre>
+
+<div class="callout callout-tip">
+<div class="callout-title">Model Choice</div>
+<p><strong>llama3.2:3b</strong> (2GB) balances size and capability. For function calling, the <a href="https://docs.openclaw.ai/providers/ollama" target="_blank" rel="noopener">OpenClaw docs</a> recommend <strong>qwen2.5-coder</strong> or <strong>qwen3</strong>. Minimum context requirement is 64K tokens. Streaming is disabled by default for Ollama due to SDK response format issues.</p>
+</div>
+
+<h3>Step 2: Configure OpenClaw for Ollama Heartbeat</h3>
+
+<pre><code class="language-json">{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-haiku-4-5"
+      },
+      "models": {
+        "anthropic/claude-sonnet-4-5": { "alias": "sonnet" },
+        "anthropic/claude-haiku-4-5": { "alias": "haiku" }
+      }
+    }
+  },
+  "heartbeat": {
+    "every": "1h",
+    "model": "ollama/llama3.2:3b",
+    "session": "main",
+    "target": "slack",
+    "prompt": "Check: Any blockers, opportunities, or progress updates needed?"
+  }
+}</code></pre>
+
+<h3>Step 3: Verify</h3>
+
+<pre><code class="language-bash"># Make sure Ollama is running
+ollama serve
+
+# In another terminal, test the model
+ollama run llama3.2:3b "respond with OK"
+# Should respond quickly with "OK"</code></pre>
+
+<div class="source-ref">
+<span class="source-icon">&#128279;</span>
+<div><a href="https://www.datacamp.com/tutorial/openclaw-ollama-tutorial" target="_blank" rel="noopener"><div class="source-title">Using OpenClaw with Ollama: Building a Local Data Analyst</div><div class="source-url">datacamp.com/tutorial</div></a></div>
+</div>
+
+<div class="source-ref">
+<span class="source-icon">&#128279;</span>
+<div><a href="https://docs.openclaw.ai/providers/ollama" target="_blank" rel="noopener"><div class="source-title">Ollama Provider - Official OpenClaw Documentation</div><div class="source-url">docs.openclaw.ai/providers/ollama</div></a></div>
+</div>
+
+<div class="comparison">
+<div class="comparison-col before">
+<h4>Before</h4>
+<ul>
+<li>Heartbeats use paid API</li>
+<li>Each heartbeat = full context resent</li>
+<li>$5-50/month on heartbeats</li>
+<li>Adds to rate limit usage</li>
+</ul>
+</div>
+<div class="comparison-col after">
+<h4>After</h4>
+<ul>
+<li>Heartbeats use free local LLM</li>
+<li>Zero API calls for heartbeats</li>
+<li>$0/month for heartbeats</li>
+<li>No impact on rate limits</li>
+</ul>
+</div>
+</div>
+
+<hr>
+
+<h2 id="limits">Part 4: Rate Limits & Budget Controls</h2>
+
+<p>Even with model routing and optimized sessions, runaway automation can still burn through tokens. These rate limits act as guardrails.</p>
+
+<div class="tweet-embed">
+<div class="tweet-author">
+<div class="tweet-name">Dev Community Report</div>
+<div class="tweet-handle">@various</div>
+</div>
+<div class="tweet-body">
+Multiple users report spending <strong>$200-500 overnight</strong> from agents stuck in repetitive task loops. One developer: "I woke up to a <strong>$200 bill</strong> because my agent kept retrying a failed operation all night."
+</div>
+<div class="tweet-date">Jan 2026 <a href="https://github.com/openclaw/openclaw/discussions/1949" class="tweet-link" target="_blank" rel="noopener">Discussion #1949 &rarr;</a></div>
+</div>
+
+<h3>Add to Your System Prompt</h3>
+
+<pre><code class="language-yaml">RATE LIMITS:
+
+- 5 seconds minimum between API calls
+- 10 seconds between web searches
+- Max 5 searches per batch, then 2-minute break
+- Batch similar work (one request for 10 leads, not 10 requests)
+- If you hit 429 error: STOP, wait 5 minutes, retry
+
+DAILY BUDGET: $5 (warning at 75%)
+MONTHLY BUDGET: $200 (warning at 75%)</code></pre>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Limit</th><th>What It Prevents</th></tr></thead>
+<tbody>
+<tr><td>5s between API calls</td><td>Rapid-fire requests that burn tokens</td></tr>
+<tr><td>10s between searches</td><td>Expensive search loops</td></tr>
+<tr><td>5 searches max, then break</td><td>Runaway research tasks</td></tr>
+<tr><td>Batch similar work</td><td>10 calls when 1 would do</td></tr>
+<tr><td>Budget warnings at 75%</td><td>Surprise bills at end of month</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Workspace File Templates</h3>
+
+<p>Keep these lean. Every line costs tokens on every request.</p>
+
+<pre><code class="language-markdown"># SOUL.md
+
+## Core Principles
+[YOUR AGENT PRINCIPLES HERE]
+
+## Model Selection
+Default: Haiku
+Switch to Sonnet only for: architecture, security, complex reasoning
+
+## Rate Limits
+5s between API calls, 10s between searches, max 5/batch then 2min break</code></pre>
+
+<pre><code class="language-markdown"># USER.md
+
+- **Name:** [YOUR NAME]
+- **Timezone:** [YOUR TIMEZONE]
+- **Mission:** [WHAT YOU'RE BUILDING]
+
+## Success Metrics
+- [METRIC 1]
+- [METRIC 2]
+- [METRIC 3]</code></pre>
+
+<hr>
+
+<h2 id="caching">Part 5: Prompt Caching</h2>
+
+<p>Your system prompt, workspace files, and reference materials get sent with every API call. Prompt caching gives you a <strong>90% discount</strong> on repeated content.</p>
+
+<h3>How It Actually Works</h3>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Event</th><th>Cost</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Cache write (5-min TTL)</td><td>1.25x base input price</td><td>Slight premium on first send</td></tr>
+<tr><td>Cache write (1-hour TTL)</td><td>2x base input price</td><td>$6/M for Sonnet vs $3/M base</td></tr>
+<tr><td>Cache read (hit)</td><td>0.1x base input price</td><td><strong>90% discount</strong></td></tr>
+<tr><td>Cache miss</td><td>1x base input price</td><td>Full price, cache expired</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="source-ref">
+<span class="source-icon">&#128279;</span>
+<div><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching" target="_blank" rel="noopener"><div class="source-title">Prompt Caching - Official Claude API Documentation</div><div class="source-url">platform.claude.com/docs</div></a></div>
+</div>
+
+<div class="callout callout-tip">
+<div class="callout-title">Cache Warming Strategy</div>
+<p>Configure your heartbeat interval to be <strong>slightly less than the cache TTL</strong>. Example: cache TTL = 1 hour, heartbeat every 55 minutes. This keeps your cache warm and prevents expensive cold starts. <a href="https://help.apiyi.com/en/openclaw-token-cost-optimization-guide-en.html" target="_blank" rel="noopener">Source: Apiyi token guide</a></p>
+</div>
+
+<h3>What to Cache vs Skip</h3>
+
+<div class="comparison">
+<div class="comparison-col after">
+<h4>Cache These (Stable)</h4>
+<ul>
+<li>System prompts (SOUL.md, USER.md)</li>
+<li>Tool documentation (TOOLS.md)</li>
+<li>Reference materials (docs, specs)</li>
+<li>Project templates</li>
+</ul>
+</div>
+<div class="comparison-col before">
+<h4>Skip These (Dynamic)</h4>
+<ul>
+<li>Daily memory files</li>
+<li>Recent user messages</li>
+<li>Tool outputs (change per task)</li>
+<li>Active project notes</li>
+</ul>
+</div>
+</div>
+
+<h3>File Structure for Maximum Cache Hits</h3>
+
+<pre><code class="language-plaintext">/workspace/
+  ├── SOUL.md                     ← Cache (stable)
+  ├── USER.md                     ← Cache (stable)
+  ├── TOOLS.md                    ← Cache (stable)
+  ├── memory/
+  │   ├── MEMORY.md               ← Don't cache (updated frequently)
+  │   └── 2026-02-03.md           ← Don't cache (daily notes)
+  └── projects/
+      └── [PROJECT]/REFERENCE.md  ← Cache (stable docs)</code></pre>
+
+<h3>Enable in Config</h3>
+
+<pre><code class="language-json">{
+  "agents": {
+    "defaults": {
+      "cache": {
+        "enabled": true,
+        "ttl": "5m",
+        "priority": "high"
+      },
+      "models": {
+        "anthropic/claude-sonnet-4-5": {
+          "alias": "sonnet",
+          "cache": true
+        },
+        "anthropic/claude-haiku-4-5": {
+          "alias": "haiku",
+          "cache": false
+        }
+      }
+    }
+  }
+}</code></pre>
+
+<div class="callout callout-info">
+<div class="callout-title">Batch API: Another 50% Off</div>
+<p>The <a href="https://platform.claude.com/docs/en/build-with-claude/batch-processing" target="_blank" rel="noopener">Claude Batch API</a> gives a flat <strong>50% discount</strong> on both input and output tokens. Batches typically finish in under 1 hour. You can combine batch pricing with prompt caching for even deeper savings. Ideal for background tasks and bulk operations where immediate response isn't critical.</p>
+</div>
+
+<h3>Real-World Example: 50 Outreach Drafts/Week</h3>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Metric</th><th>Without Caching</th><th>With Caching (Batched)</th></tr></thead>
+<tbody>
+<tr><td>System prompt</td><td>5KB x 50 = 250KB/week</td><td>1 write + 49 cached</td></tr>
+<tr><td>System prompt cost</td><td>$0.75/week</td><td>$0.016/week</td></tr>
+<tr><td>50 drafts</td><td>$1.20/week</td><td>$0.60/week (~50% cache hits)</td></tr>
+<tr><td><strong>Total</strong></td><td><strong>$1.95/week ($102/mo)</strong></td><td><strong>$0.62/week ($32/mo)</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Savings: <strong>$70/month</strong> on a single workflow.</p>
+
+<h3>When NOT to Cache</h3>
+
+<ul>
+<li><strong>Haiku tasks</strong> &mdash; too cheap to justify caching overhead.</li>
+<li><strong>Frequent prompt changes</strong> &mdash; cache invalidation costs more than caching saves.</li>
+<li><strong>Small requests (&lt;1KB)</strong> &mdash; caching overhead eats the discount.</li>
+<li><strong>Development/testing</strong> &mdash; too many prompt iterations cause cache thrashing.</li>
+</ul>
+
+<hr>
+
+<h2 id="monitoring">Part 6: Monitoring & Observability</h2>
+
+<p>You can't optimize what you can't measure. These tools show where your tokens actually go.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Tool</th><th>What It Does</th><th>Link</th></tr></thead>
+<tbody>
+<tr><td><strong>Tapes</strong></td><td>Records every API call. Full visibility into prompts, token usage, agent behavior.</td><td><a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener">Built-in</a></td></tr>
+<tr><td><strong>OpenTelemetry</strong></td><td>Built-in OTEL support (v2026.2+). Metrics: <code>openclaw.tokens</code>, <code>openclaw.cost.usd</code>, <code>openclaw.context.tokens</code></td><td><a href="https://github.com/henrikrexed/openclaw-observability-plugin" target="_blank" rel="noopener">GitHub</a></td></tr>
+<tr><td><strong>TokScale</strong></td><td>CLI tool for real-time token usage tracking with pricing breakdowns.</td><td><a href="https://github.com/junhoyeo/tokscale" target="_blank" rel="noopener">GitHub</a></td></tr>
+<tr><td><strong>Portkey</strong></td><td>Request logs, cost tracking, automatic failovers, team controls.</td><td><a href="https://portkey.ai/docs/integrations/libraries/openclaw" target="_blank" rel="noopener">Docs</a></td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Verify Your Setup</h3>
+
+<pre><code class="language-bash"># Start a session
+openclaw shell
+
+# Check current status
+session_status
+
+# You should see:
+# - Context size: 2-8KB (not 50KB+)
+# - Model: Haiku (not Sonnet)
+# - Heartbeat: Ollama/local</code></pre>
+
+<h3>Cache Performance Check</h3>
+
+<pre><code class="language-bash"># Check cache effectiveness
+openclaw shell
+session_status
+
+# Look for cache metrics:
+# Cache hits: 45/50 (90%)
+# Cache tokens used: 225KB (vs 250KB without cache)
+# Cost savings: $0.22 this session</code></pre>
+
+<h3>Troubleshooting</h3>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Issue</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Context size still large</td><td>Check session initialization rules are in system prompt</td></tr>
+<tr><td>Still using Sonnet for everything</td><td>Verify <code>~/.openclaw/openclaw.json</code> syntax and path</td></tr>
+<tr><td>Heartbeat errors</td><td>Make sure Ollama is running (<code>ollama serve</code>)</td></tr>
+<tr><td>Costs haven't dropped</td><td>Use TokScale or Tapes to see where tokens actually go</td></tr>
+<tr><td>Cache hit rate below 80%</td><td>System prompt is changing too often. Batch updates to maintenance windows.</td></tr>
+</tbody>
+</table>
+</div>
+
+<hr>
+
+<h2 id="checklist">Quick Reference Checklist</h2>
+
+<div class="checklist">
+<div class="checklist-group">
+<div class="checklist-group-title">Session Initialization</div>
+<div class="checklist-item"><div class="checklist-box"></div>Added SESSION INITIALIZATION RULE to system prompt</div>
+<div class="checklist-item"><div class="checklist-box"></div>Configured idle window (24h) and archive period (90d)</div>
+</div>
+<div class="checklist-group">
+<div class="checklist-group-title">Model Routing</div>
+<div class="checklist-item"><div class="checklist-box"></div>Updated ~/.openclaw/openclaw.json with Haiku as default</div>
+<div class="checklist-item"><div class="checklist-box"></div>Added MODEL SELECTION RULE to system prompt</div>
+<div class="checklist-item"><div class="checklist-box"></div>Evaluated ultra-cheap models for heartbeats (Gemini Flash-Lite, DeepSeek)</div>
+</div>
+<div class="checklist-group">
+<div class="checklist-group-title">Heartbeat to Ollama</div>
+<div class="checklist-item"><div class="checklist-box"></div>Installed Ollama and pulled llama3.2:3b (or qwen2.5-coder)</div>
+<div class="checklist-item"><div class="checklist-box"></div>Added heartbeat config pointing to Ollama</div>
+<div class="checklist-item"><div class="checklist-box"></div>Verified Ollama is running (ollama serve)</div>
+</div>
+<div class="checklist-group">
+<div class="checklist-group-title">Rate Limits & Workspace</div>
+<div class="checklist-item"><div class="checklist-box"></div>Added RATE LIMITS to system prompt</div>
+<div class="checklist-item"><div class="checklist-box"></div>Created lean SOUL.md and USER.md</div>
+<div class="checklist-item"><div class="checklist-box"></div>Set daily ($5) and monthly ($200) budget caps</div>
+</div>
+<div class="checklist-group">
+<div class="checklist-group-title">Prompt Caching</div>
+<div class="checklist-item"><div class="checklist-box"></div>Enabled caching in config (Sonnet: true, Haiku: false)</div>
+<div class="checklist-item"><div class="checklist-box"></div>Separated stable files from dynamic files</div>
+<div class="checklist-item"><div class="checklist-box"></div>Set heartbeat interval &lt; cache TTL for warm cache</div>
+</div>
+<div class="checklist-group">
+<div class="checklist-group-title">Monitoring</div>
+<div class="checklist-item"><div class="checklist-box"></div>Installed TokScale or configured Tapes</div>
+<div class="checklist-item"><div class="checklist-box"></div>Verified cache hit rate > 80%</div>
+<div class="checklist-item"><div class="checklist-box"></div>Ran session_status to confirm</div>
+</div>
+</div>
+
+<hr>
+
+<h2>The Bottom Line</h2>
+
+<p>No complex infrastructure changes. Smart config, clear rules in your system prompt, a free local LLM for heartbeats, and monitoring to know where your tokens go.</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Optimization</th><th>Savings</th><th>Effort</th></tr></thead>
+<tbody>
+<tr><td>Session Initialization</td><td>80% less context overhead</td><td>5 min (system prompt edit)</td></tr>
+<tr><td>Model Routing (Haiku default)</td><td>50-80% on model costs</td><td>5 min (config change)</td></tr>
+<tr><td>Heartbeat to Ollama</td><td>100% heartbeat costs gone</td><td>10 min (install + config)</td></tr>
+<tr><td>Rate Limits</td><td>Prevents $200+ runaway bills</td><td>5 min (system prompt edit)</td></tr>
+<tr><td>Prompt Caching</td><td>90% on repeated content</td><td>5 min (config change)</td></tr>
+<tr><td>Monitoring (TokScale/Tapes)</td><td>Visibility into actual spend</td><td>5 min (install)</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Combined result: from $1,500+/month down to $30-50/month.</p>
+
+<p>The intelligence is in the prompt, not the infrastructure.</p>
+
+<h3>Further Reading</h3>
+
+<div class="source-ref">
+<span class="source-icon">&#128279;</span>
+<div><a href="https://docs.openclaw.ai/concepts/session" target="_blank" rel="noopener"><div class="source-title">Session Management - OpenClaw Docs</div><div class="source-url">docs.openclaw.ai/concepts/session</div></a></div>
+</div>
+
+<div class="source-ref">
+<span class="source-icon">&#128279;</span>
+<div><a href="https://github.com/openclaw/openclaw/issues/9157" target="_blank" rel="noopener"><div class="source-title">Workspace file injection wastes 93.5% of token budget (Issue #9157)</div><div class="source-url">github.com/openclaw/openclaw/issues/9157</div></a></div>
+</div>
+
+<div class="source-ref">
+<span class="source-icon">&#128279;</span>
+<div><a href="https://velvetshark.com/openclaw-multi-model-routing" target="_blank" rel="noopener"><div class="source-title">Stop overpaying for OpenClaw: Multi-model routing guide</div><div class="source-url">velvetshark.com</div></a></div>
+</div>
+
+<div class="source-ref">
+<span class="source-icon">&#128279;</span>
+<div><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching" target="_blank" rel="noopener"><div class="source-title">Prompt Caching - Claude API Documentation</div><div class="source-url">platform.claude.com/docs</div></a></div>
+</div>
+
+<div class="source-ref">
+<span class="source-icon">&#128279;</span>
+<div><a href="https://platform.claude.com/docs/en/build-with-claude/batch-processing" target="_blank" rel="noopener"><div class="source-title">Batch Processing (50% discount) - Claude API Documentation</div><div class="source-url">platform.claude.com/docs</div></a></div>
+</div>
+
+<div class="source-ref">
+<span class="source-icon">&#128279;</span>
+<div><a href="https://www.openclawexperts.io/guides/enterprise/how-to-manage-openclaw-sessions-and-context-pruning" target="_blank" rel="noopener"><div class="source-title">How to Manage OpenClaw Sessions & Context Pruning</div><div class="source-url">openclawexperts.io</div></a></div>
+</div>
+
+</article>
+
+<footer class="footer">
+<div class="footer-logo"><span class="claw">Open</span>Claw</div>
+<p>Part of <a href="../index.html">Awesome OpenClaw</a> &mdash; the most comprehensive OpenClaw resource collection.</p>
+<p style="margin-top:8px"><a href="https://github.com/rohitg00/awesome-openclaw">GitHub</a> &middot; <a href="../blog.html">Blog</a> &middot; <a href="../directory.html">Directory</a></p>
+</footer>
+
+<button class="back-to-top" id="backToTop" title="Back to top">&uarr;</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/markdown.min.js"></script>
+<script>
+(function(){
+'use strict';
+const $=s=>document.querySelector(s);
+const html=document.documentElement;
+function setTheme(t){
+if(t==='light'){html.setAttribute('data-theme','light');$('#themeIcon').textContent='\u2600'}
+else{html.removeAttribute('data-theme');$('#themeIcon').textContent='\u263E'}
+localStorage.setItem('theme',t);
+}
+const saved=localStorage.getItem('theme');
+if(saved)setTheme(saved);
+else if(window.matchMedia('(prefers-color-scheme:light)').matches)setTheme('light');
+$('#themeToggle').addEventListener('click',()=>setTheme(html.getAttribute('data-theme')==='light'?'dark':'light'));
+
+const btt=$('#backToTop');
+window.addEventListener('scroll',()=>{
+btt.classList.toggle('show',window.scrollY>400);
+const prog=$('#readingProgress');
+const h=document.documentElement.scrollHeight-window.innerHeight;
+if(h>0)prog.style.width=(window.scrollY/h*100)+'%';
+},{passive:true});
+btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+hljs.highlightAll();
+
+document.querySelectorAll('pre').forEach(pre=>{
+const btn=document.createElement('button');
+btn.className='copy-btn';btn.textContent='Copy';
+btn.addEventListener('click',()=>{
+const code=pre.querySelector('code')||pre;
+navigator.clipboard.writeText(code.textContent).then(()=>{
+btn.textContent='Copied!';btn.classList.add('copied');
+setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000);
+});
+});
+pre.appendChild(btn);
+
+const code=pre.querySelector('code');
+if(code){
+const cls=Array.from(code.classList).find(c=>c.startsWith('language-'));
+if(cls){
+const lang=cls.replace('language-','');
+const label=document.createElement('span');
+label.className='code-label';
+label.textContent=lang;
+pre.appendChild(label);
+}
+}
+});
+})();
+</script>
+</body>
+</html>
