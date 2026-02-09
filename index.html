@@ -60,7 +60,11 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 .nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--card-border);transition:background .3s}
 .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:64px}
 .nav-logo{font-weight:800;font-size:1.1rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px;flex-shrink:0}
-.nav-logo .claw{color:var(--primary)}
+.nav-logo img{height:28px;width:auto}
+.nav-logo-dark,.nav-logo-light{display:none}
+:root:not([data-theme="light"]) .nav-logo-dark{display:block}
+[data-theme="light"] .nav-logo-light{display:block}
+[data-theme="light"] .nav-logo-dark{display:none}
 .nav-actions{display:flex;align-items:center;gap:12px;flex-shrink:0}
 .sidebar{position:fixed;top:80px;right:max(16px,calc((100vw - 1200px)/2 - 180px));width:180px;max-height:calc(100vh - 100px);overflow-y:auto;z-index:50;scrollbar-width:none;opacity:0;pointer-events:none;transform:translateX(10px);transition:opacity .3s,transform .3s}
 .sidebar.visible{opacity:1;pointer-events:auto;transform:none}
@@ -198,7 +202,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 <body>
 
 <nav class="nav"><div class="nav-inner">
-<a href="#" class="nav-logo"><span class="claw">Open</span>Claw</a>
+<a href="#" class="nav-logo"><img src="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text.png" alt="OpenClaw" class="nav-logo-dark"><img src="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text-dark.png" alt="OpenClaw" class="nav-logo-light"></a>
 <div class="nav-actions">
 <a href="directory.html" class="dir-link">Directory</a>
 <a href="blog.html" class="dir-link">Blog</a>
