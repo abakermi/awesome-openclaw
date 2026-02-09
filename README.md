@@ -1027,6 +1027,7 @@ Capabilities: CDP, ARIA snapshots, screenshots, tab management, click/type/drag,
 - [StackViv - Complete 2026 Guide](https://stackviv.ai/blog/how-to-set-up-openclaw-guide)
 - [Habr - Don't Launch Before Reading This](https://habr.com/en/articles/992720/)
 - [AI/ML API - Secure Local Docker Setup](https://aimlapi.com/blog/running-openclaw-in-docker-secure-local-setup-and-practical-workflow-guide)
+- [OpenClaw/ClawdBot Masterclass](https://blog.dailydoseofds.com/p/openclawclawdbot-masterclass) — In-depth written guide by Akshay Pachaar covering installation, Telegram, skills, cron jobs, scaling
 
 ### Reviews
 
@@ -1089,12 +1090,15 @@ Capabilities: CDP, ARIA snapshots, screenshots, tab management, click/type/drag,
 
 | Title | Platform | Duration | Topics |
 |-------|----------|----------|--------|
-| **OpenClaw Full Tutorial for Beginners** | freeCodeCamp (YouTube) | Long | Installation, models, memory, Docker, skills |
 | **Master OpenClaw in 30 Minutes** | Creator Economy (YouTube) | 30 min | Safe setup, 5 real use cases, memory |
 | **How OpenClaw's Creator Uses AI** | Creator Economy | 1 hour | Full demo with Peter Steinberger |
 | **OpenClaw Google Workspace Setup** | YouTube | Medium | Gmail, Calendar, Drive integration |
 | **Udemy - OpenClaw on Azure Linux VM** | [Udemy](https://www.udemy.com/course/openclaw/) | Medium | Azure deployment |
 | **Udemy - OpenClaw Complete (Japanese)** | [Udemy](https://www.udemy.com/course/openclaw-clawdbot/) | Long | LINE + Docker, comprehensive |
+| **OpenClaw Full Tutorial for Beginners** | [freeCodeCamp (YouTube)](https://www.youtube.com/watch?v=n1sfrc-RjyM) | Long | Installation, models, memory, Docker, skills |
+| **The Wild Rise of OpenClaw** | [Fireship (YouTube)](https://www.youtube.com/watch?v=ssYt09bCgUY) | Short | History, architecture, why it matters |
+| **ClawdBot Is the Most Powerful AI Tool** | [Alex Finn (YouTube)](https://www.youtube.com/watch?v=Qkqe-uRhQJE) | Medium | ClawdBot deep dive, real-world demos |
+| **How to Setup OpenClaw in 5 Minutes** | [Julian Goldie (YouTube)](https://www.youtube.com/watch?v=1luvvYcpSJ8) | 5 min | Quick start, beginner-friendly |
 
 ---
 
