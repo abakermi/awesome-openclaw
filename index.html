@@ -14,7 +14,7 @@
 <meta name="twitter:title" content="Awesome OpenClaw — The Ultimate Resource Collection">
 <meta name="twitter:description" content="The most comprehensive OpenClaw resource collection. Hosting comparisons, cost breakdowns, security guides, and more.">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/rohitg00/awesome-openclaw/main/og-image.png">
-<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text-dark.png">
+<link rel="icon" type="image/svg+xml" href="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/pixel-lobster.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -59,13 +59,20 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 ::-webkit-scrollbar-thumb{background:var(--scrollbar-thumb);border-radius:4px}
 .nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--card-border);transition:background .3s}
 .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:64px}
-.nav-logo{font-weight:800;font-size:1.1rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px}
-.nav-logo .claw{color:var(--primary)}
-.nav-links{display:flex;gap:4px;overflow-x:auto;max-width:50%;scrollbar-width:none}
-.nav-links::-webkit-scrollbar{display:none}
-.nav-links a{color:var(--text-muted);text-decoration:none;font-size:.85rem;padding:6px 12px;border-radius:6px;white-space:nowrap;transition:color .2s,background .2s;font-weight:500}
-.nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--card)}
-.nav-actions{display:flex;align-items:center;gap:12px}
+.nav-logo{font-weight:800;font-size:1.1rem;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.nav-logo img{height:28px;width:auto}
+.nav-logo-dark,.nav-logo-light{display:none}
+:root:not([data-theme="light"]) .nav-logo-dark{display:block}
+[data-theme="light"] .nav-logo-light{display:block}
+[data-theme="light"] .nav-logo-dark{display:none}
+.nav-actions{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.sidebar{position:fixed;top:80px;right:max(16px,calc((100vw - 1200px)/2 - 180px));width:180px;max-height:calc(100vh - 100px);overflow-y:auto;z-index:50;scrollbar-width:none;opacity:0;pointer-events:none;transform:translateX(10px);transition:opacity .3s,transform .3s}
+.sidebar.visible{opacity:1;pointer-events:auto;transform:none}
+.sidebar::-webkit-scrollbar{display:none}
+.sidebar-title{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:8px;padding:0 8px}
+.sidebar a{display:block;color:var(--text-muted);text-decoration:none;font-size:.78rem;padding:5px 8px;border-radius:6px;border-left:2px solid transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .2s,border-color .2s;font-weight:500;line-height:1.4}
+.sidebar a:hover{color:var(--text)}
+.sidebar a.active{color:var(--primary);border-left-color:var(--primary)}
 .theme-toggle{background:var(--card);border:1px solid var(--card-border);color:var(--text);cursor:pointer;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all .2s}
 .theme-toggle:hover{border-color:var(--primary)}
 .search-btn{background:var(--card);border:1px solid var(--card-border);color:var(--text-muted);cursor:pointer;padding:6px 14px;border-radius:8px;font-size:.85rem;font-family:inherit;transition:all .2s;display:flex;align-items:center;gap:8px;font-weight:500}
@@ -99,8 +106,11 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 [data-theme="light"] .hero-logo-light{display:block;margin:0 auto}
 :root:not([data-theme="light"]) .hero-logo-dark{display:block;margin:0 auto}
 [data-theme="light"] .hero-logo-dark{display:none}
-.hero h1{position:relative;z-index:1;font-size:clamp(2.5rem,6vw,4rem);font-weight:900;letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px}
-.hero h1 .glow{color:var(--primary);text-shadow:0 0 40px rgba(220,38,38,0.3)}
+.hero h1{position:relative;z-index:1;font-size:clamp(2.5rem,6vw,4rem);font-weight:900;letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px;white-space:nowrap}
+.hero-inline-logo{height:1.1em;width:auto;vertical-align:middle;margin-left:.15em;display:none}
+:root:not([data-theme="light"]) .hero h1 .hero-inline-dark{display:inline}
+[data-theme="light"] .hero h1 .hero-inline-light{display:inline}
+[data-theme="light"] .hero h1 .hero-inline-dark{display:none}
 .hero-tagline{position:relative;z-index:1;font-size:1.15rem;color:var(--text-muted);max-width:700px;margin:0 auto 32px;line-height:1.6}
 .stats-bar{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:center;gap:24px;margin-bottom:32px}
 .stat{font-weight:700;font-size:1rem;color:var(--text)}
@@ -166,7 +176,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 .loading-spinner{display:inline-block;width:32px;height:32px;border:3px solid var(--card-border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:16px}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:768px){
-.nav-links{display:none}
+.sidebar{display:none}
 .nav-inner{padding:0 10px;gap:6px}
 .nav-actions{gap:6px}
 .dir-link{padding:4px 8px;font-size:.75rem}
@@ -189,16 +199,16 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 .content{padding:0 16px 40px}
 .content h2{font-size:1.4rem}
 }
-@media(min-width:769px) and (max-width:1024px){.nav-links{max-width:40%}}
+@media(min-width:769px) and (max-width:1200px){.sidebar{display:none}}
 </style>
 </head>
 <body>
 
 <nav class="nav"><div class="nav-inner">
-<a href="#" class="nav-logo"><span class="claw">Open</span>Claw</a>
-<div class="nav-links" id="navLinks"></div>
+<a href="#" class="nav-logo"><img src="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text.png" alt="OpenClaw" class="nav-logo-dark"><img src="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text-dark.png" alt="OpenClaw" class="nav-logo-light"></a>
 <div class="nav-actions">
 <a href="directory.html" class="dir-link">Directory</a>
+<a href="blog.html" class="dir-link">Blog</a>
 <button class="search-btn" id="searchBtn"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M13 13l4 4"/></svg><span class="label">Search</span><span class="kbd">&#8984;K</span></button>
 <button class="theme-toggle" id="themeToggle" title="Toggle theme"><span id="themeIcon">☾</span></button>
 <a href="https://github.com/rohitg00/awesome-openclaw" target="_blank" rel="noopener" class="gh-link"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span class="gh-stars" id="ghStars"></span><span>GitHub</span></a>
@@ -213,9 +223,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 
 <section class="hero" id="top">
 <div class="hero-orb"></div>
-<img src="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text.png" alt="OpenClaw" class="hero-logo hero-logo-dark" width="280">
-<img src="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text-dark.png" alt="OpenClaw" class="hero-logo hero-logo-light" width="280">
-<h1>Awesome <span class="glow">OpenClaw</span></h1>
+<h1>Awesome <img src="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text.png" alt="OpenClaw" class="hero-inline-logo hero-inline-dark"><img src="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text-dark.png" alt="OpenClaw" class="hero-inline-logo hero-inline-light"></h1>
 <div class="stats-bar">
 <div class="stat">179K+<span>stars</span></div>
 <div class="stat">29.6K+<span>forks</span></div>
@@ -243,6 +251,7 @@ GitHub Repo
 </div>
 </section>
 
+<aside class="sidebar" id="sidebar"><div class="sidebar-title">On this page</div></aside>
 <main class="content" id="mainContent">
 <div class="loading" id="loadingIndicator">
 <div class="loading-spinner"></div>
@@ -276,7 +285,15 @@ else if(window.matchMedia('(prefers-color-scheme:light)').matches)setTheme('ligh
 $('#themeToggle').addEventListener('click',()=>setTheme(html.getAttribute('data-theme')==='light'?'dark':'light'));
 
 const btt=$('#backToTop');
-window.addEventListener('scroll',()=>btt.classList.toggle('show',window.scrollY>400),{passive:true});
+const sidebarEl=$('#sidebar');
+window.addEventListener('scroll',()=>{
+btt.classList.toggle('show',window.scrollY>400);
+const heroBottom=document.querySelector('.hero');
+if(heroBottom){
+const rect=heroBottom.getBoundingClientRect();
+sidebarEl.classList.toggle('visible',rect.bottom<0);
+}
+},{passive:true});
 btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 
 const NAV_MAP={
@@ -392,8 +409,9 @@ if(section) section.style.display='none';
 }
 
 function buildNav(container){
-const navLinks=$('#navLinks');
-navLinks.innerHTML='';
+const sidebar=$('#sidebar');
+const existing=sidebar.querySelectorAll('a');
+existing.forEach(a=>a.remove());
 const h2s=container.querySelectorAll('h2');
 const added=new Set();
 h2s.forEach(h2=>{
@@ -406,18 +424,18 @@ const a=document.createElement('a');
 a.href='#'+id;
 a.setAttribute('data-target',id);
 a.textContent=label;
-navLinks.appendChild(a);
+sidebar.appendChild(a);
 });
-const navObs=new IntersectionObserver(entries=>{
+const sideObs=new IntersectionObserver(entries=>{
 entries.forEach(entry=>{
 if(entry.isIntersecting){
 const h2=entry.target.querySelector('h2');
 if(!h2)return;
-$$('.nav-links a').forEach(a=>a.classList.toggle('active',a.getAttribute('data-target')===h2.id));
+sidebar.querySelectorAll('a').forEach(a=>a.classList.toggle('active',a.getAttribute('data-target')===h2.id));
 }
 });
 },{rootMargin:'-80px 0px -60% 0px',threshold:0});
-$$('.section').forEach(s=>{if(s.querySelector('h2'))navObs.observe(s)});
+$$('.section').forEach(s=>{if(s.querySelector('h2'))sideObs.observe(s)});
 }
 
 function initScrollReveal(){
