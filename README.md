@@ -19,7 +19,8 @@
 
 <p align="center">
   <strong>179,000+ stars | 29,600+ forks | 376 contributors | 9,191+ commits | MIT License</strong><br>
-  <em>Fastest-growing GitHub repo ever — 9K to 179K stars in 60 days (18x faster than Kubernetes)</em>
+  <em>Fastest-growing GitHub repo ever — 9K to 179K stars in 60 days (18x faster than Kubernetes)</em><br>
+  <em>Last updated: February 11, 2026</em>
 </p>
 
 <p align="center">
@@ -91,6 +92,7 @@
 - [Key Contributors](#key-contributors)
 - [Related Repositories](#related-repositories)
 - [Kubernetes & Helm Charts](#kubernetes--helm-charts)
+- [PicoClaw (RISC-V / Ultra-Lightweight)](#picoclaw-risc-v--ultra-lightweight)
 - [Courses & Learning Platforms](#courses--learning-platforms)
 - [Enterprise Considerations](#enterprise-considerations)
 - [China & Global Adoption](#china--global-adoption)
@@ -189,6 +191,7 @@ That's it. The wizard walks you through API key setup, channel configuration, an
 | **[Manual VPS](https://docs.openclaw.ai/vps)** | 10 min | Medium | Full control |
 | **[Raspberry Pi](https://docs.openclaw.ai/raspberry-pi)** | 10 min | Medium | Low-power, always-on |
 | **[ESP32-S3 (MimiClaw)](https://github.com/memovai/mimiclaw)** | 10 min | Medium | Cheapest hardware ($5), pure C, no OS |
+| **[PicoClaw (RISC-V)](https://github.com/sipeed/picoclaw)** | 5 min | Easy | Single Go binary, 10 MB RAM, $10 RISC-V board |
 
 ### Method 1: Official Installer Script
 
@@ -353,6 +356,7 @@ Hire someone to set it up for you.
 | [ClawCloud Starter](https://www.clawcloud.sh/) | **$29** | < 1 min | **None** | **Yes** | Premium managed |
 | [Raspberry Pi 5](https://docs.openclaw.ai/raspberry-pi) | **$0**/mo | 30 min | Medium | No | Low-power, always-on |
 | [ESP32-S3 (MimiClaw)](https://github.com/memovai/mimiclaw) | **$0**/mo | 10 min | Medium | No | Cheapest ($5 chip), no OS |
+| [PicoClaw (RISC-V)](https://github.com/sipeed/picoclaw) | **$0**/mo | 5 min | Easy | No | $10 hardware, 10 MB RAM, Go binary |
 | Mac Mini | **$0**/mo | 10 min | Easy | No | Privacy-first, local |
 
 ---
@@ -414,6 +418,7 @@ The **real cost** of running OpenClaw is the AI model API, not infrastructure.
 | **Cloudflare** | Workers ($5+$30) | Mixed ($20) | **$55** | Serverless architecture |
 | **Local LLM** | Raspberry Pi 5 ($0/mo) | Ollama ($0) | **$0** | After $80 hardware purchase |
 | **Embedded** | ESP32-S3 ($0/mo) | Claude API ($5) | **$5** | After $5 hardware purchase (MimiClaw) |
+| **PicoClaw** | RISC-V board ($0/mo) | Gemini/Claude ($5) | **$5** | After $10 hardware purchase (PicoClaw) |
 | **Power User** | DigitalOcean ($24) | Opus ($200) | **$224** | Heavy professional use |
 | **Extreme** | Dedicated ($50) | All models ($573) | **$623** | One developer's real report |
 
@@ -731,6 +736,8 @@ ollama pull llama3.1
 |--------|--------|----------|
 | **openclaw-mcp-plugin** | [GitHub](https://github.com/lunarpulse/openclaw-mcp-plugin) | HTTP/SSE transport, multi-server, unified interface |
 | **openclaw-mcp-adapter** | [npm](https://www.npmjs.com/package/openclaw-mcp-adapter) | Registers MCP tools as native agent tools |
+| **openclaw-mcp** | [GitHub](https://github.com/freema/openclaw-mcp) | Secure Claude.ai ↔ OpenClaw bridge with OAuth 2.1 authentication |
+| **openclaw-mcp-server** | [GitHub](https://github.com/Helms-AI/openclaw-mcp-server) | Exposes OpenClaw Gateway tools to Claude Code and MCP clients |
 
 ---
 
@@ -808,6 +815,8 @@ Configure multiple agents with separate workspaces, personas, auth profiles, and
 | **Menu Bar App** | macOS | Available | Pixel lobster icon, voice wake, Canvas panel, TCC permissions |
 | **Crabwalk** | Cross-platform | Available | Open-source companion app ([crabwalk.app](https://crabwalk.app/)) |
 | **iOS/Android** | Mobile | Beta | Camera, screen recording, notifications |
+| **[Expo OpenClaw Chat](https://github.com/brunobar79/expo-openclaw-chat)** | iOS/Android (Expo) | Available | React Native chat SDK for building native mobile OpenClaw clients |
+| **[OpenClawgotchi](https://github.com/turmyshevd/openclawgotchi)** | Raspberry Pi | Available | AI Tamagotchi with E-Ink face — agentic life-form hardware |
 
 ### Monitoring & Dashboards
 
@@ -817,6 +826,9 @@ Configure multiple agents with separate workspaces, personas, auth profiles, and
 | **[ClawController](https://www.clawcontroller.com/)** | Third-party | Real-time monitoring, task orchestration, agent chat |
 | **claw-dash** | Community | Sessions, tokens, costs, CPU/RAM/disk metrics |
 | **Mission Control** | Community | Convex + React, live logs, task tracking |
+| **[OpenClaw Mission Control](https://github.com/abhi1693/openclaw-mission-control)** | Community | RBAC, Kanban board, War Room, transcripts, Telegram output (37 stars) |
+| **[OpenClaw Studio](https://github.com/grp06/openclaw-studio)** | Community | Visual agent management with cron jobs, tool extraction, mentions (410 stars) |
+| **[Hawk Eye](https://github.com/benfoxsb/hawk-eye)** | Community | Workspace sentinel & operational dashboard |
 
 ### Backup & Restore
 
@@ -846,6 +858,7 @@ tar -czvf ~/openclaw_backup_$(date +%Y%m%d).tar.gz -C "$HOME" .openclaw
 | **Oracle ARM (7B)** | 5-10 t/s | Free tier, acceptable |
 | **Raspberry Pi 5** | 2-5 t/s | Slow but works |
 | **ESP32-S3 (MimiClaw)** | Cloud API | No local inference, calls Claude API via Wi-Fi |
+| **RISC-V (PicoClaw)** | Cloud API | 10 MB RAM, single Go binary, 1s boot, $10 board |
 
 ### Memory for Local Models
 
@@ -880,7 +893,9 @@ tar -czvf ~/openclaw_backup_$(date +%Y%m%d).tar.gz -C "$HOME" .openclaw
 
 | Alternative | Type | Best For | Key Advantage |
 |-------------|------|----------|---------------|
-| **Nanobot** | Lightweight (4K lines) | Minimalists | 99% smaller codebase |
+| **[Nanobot](https://github.com/HKUDS/nanobot)** | Lightweight (4K lines) | Minimalists | 99% smaller codebase, 45 MB RAM, MCP-native |
+| **[PicoClaw](https://github.com/sipeed/picoclaw)** | Ultra-lightweight (Go) | Embedded/hardware | 10 MB RAM, $10 RISC-V, single binary, 1s boot |
+| **[Archestra](https://github.com/archestra-ai/archestra)** | Enterprise | Security/compliance | MCP registry, A2A, agentic security (3.5K stars) |
 | **NanoClaw** | Security-first | Security-conscious | Isolated Apple containers |
 | **memU** | Memory-focused | Budget users | Local knowledge graph |
 | **Jan.ai** | Offline chat | Privacy absolutists | 100% offline |
@@ -901,6 +916,9 @@ tar -czvf ~/openclaw_backup_$(date +%Y%m%d).tar.gz -C "$HOME" .openclaw
 | [**Ralv**](https://ralv.ai/) | 3D agent orchestration | Multi-agent management | StarCraft-like spatial UI for commanding 100+ agents |
 | [**GitClaw**](https://github.com/SawyerHood/gitclaw) | GitHub Actions agent | Serverless | Zero-infra OpenClaw via GitHub Issues & Actions |
 | [**BankrBot Skills**](https://github.com/BankrBot/openclaw-skills) | DeFi/crypto agent | Web3 traders | Polymarket, token trading, NFTs, on-chain messaging |
+| [**ClosedClaw**](https://github.com/asafelobotomy/ClosedClaw) | Desktop GUI fork | GTK users | GTK GUI + Ollama integration + enhanced lite mode |
+| [**OpenGlass**](https://github.com/DarlingtonDeveloper/OpenGlass) | Smart glasses | Wearable hardware | Meta Ray-Bans + Gemini Live + OpenClaw real-time AI |
+| [**Scallopbot**](https://github.com/tashfeenahmed/scallopbot) | Cost-optimized agent | Budget users | Multi-provider routing, budget controls, voice I/O |
 
 ---
 
@@ -950,6 +968,11 @@ Created by OpenClaw agent "Clawd Clawderberg" (built by Matt Schlicht, Cofounder
 | **Supermemory** | Unlimited memory for OpenClaw | ClawHub |
 | **Claude Team** | Spawns visible terminal sessions instead of background | [X/@jlehman_](https://x.com/jlehman_/status/2008644506951053492) |
 | **ClawRouter** | Smart LLM router — save 78% on inference costs, 30+ models | [GitHub](https://github.com/BlockRunAI/ClawRouter) |
+| **Last30Days** | Research any topic across Reddit + X from the last 30 days, generates copy-paste-ready prompts (2.5K stars) | [GitHub](https://github.com/mvanhorn/last30days-skill) |
+| **X Research Skill** | Agentic X/Twitter research — thread following, deep-dives, sourced briefings (630 stars) | [GitHub](https://github.com/rohunvora/x-research-skill) |
+| **Agent Sessions** | Session browser + analytics + limits tracker for Codex CLI, Claude Code, OpenCode, Gemini CLI (245 stars) | [GitHub](https://github.com/jazzyalex/agent-sessions) |
+| **Announcer** | House-wide TTS announcements via AirPlay speakers | [GitHub](https://github.com/odrobnik/announcer-skill) |
+| **GitHub Search Skills** | Deep GitHub project analysis and exploration | [GitHub](https://github.com/blessonism/openclaw-search-skills) |
 
 ### Third-Party Platforms
 
@@ -960,6 +983,8 @@ Created by OpenClaw agent "Clawd Clawderberg" (built by Matt Schlicht, Cofounder
 | **[You.com](https://you.com/resources/openclaw-integration)** | Search/AI | OpenClaw skill for You.com search and AI integration |
 | **[ClawSec](https://github.com/prompt-security/clawsec)** | Security | Complete security skill suite by Prompt Security |
 | **[unRAID Community App](https://www.reddit.com/r/unRAID/comments/1qv4tky/openclaw_ai_assistant_gateway_now_available_on/)** | NAS/Server | Official Community Apps template for unRAID |
+| **[Expo OpenClaw Chat](https://github.com/brunobar79/expo-openclaw-chat)** | Mobile SDK | React Native / Expo chat SDK for building native iOS/Android OpenClaw clients |
+| **[Airstore](https://github.com/beam-cloud/airstore)** | Agent Storage | The filesystem for AI agents — persistent storage layer (89 stars) |
 
 ### Install a Skill
 
@@ -1069,6 +1094,7 @@ Capabilities: CDP, ARIA snapshots, screenshots, tab management, click/type/drag,
 
 - [Raspberry Pi - ajfisher](https://ajfisher.me/2026/02/03/openclaw-raspberrypi-howto/) | [Adafruit](https://learn.adafruit.com/openclaw-on-raspberry-pi)
 - [ESP32-S3 MimiClaw](https://github.com/memovai/mimiclaw) — OpenClaw core on a $5 chip, pure C, no Linux/Node.js
+- [PicoClaw](https://github.com/sipeed/picoclaw) — Ultra-lightweight Go agent, 10 MB RAM, $10 RISC-V board, single binary | [CNX Software](https://www.cnx-software.com/2026/02/10/picoclaw-ultra-lightweight-personal-ai-assistant-run-on-just-10mb-of-ram/)
 - [Ollama Guide](https://codersera.com/blog/openclaw-ollama-setup-guide-2026/) | [LM Studio](https://codersera.com/blog/openclaw-lm-studio-setup-guide-2026/)
 - [vLLM on AMD Free](https://www.amd.com/en/developer/resources/technical-articles/2026/openclaw-with-vllm-running-for-free-on-amd-developer-cloud-.html)
 
@@ -1317,6 +1343,24 @@ node --version                     # Must be 22+
 | [prompt-security/clawsec](https://github.com/prompt-security/clawsec) | Complete security skill suite for OpenClaw family (Moltbot, Clawdbot, clones) |
 | [aws-samples/sample-OpenClaw-on-AWS-with-Bedrock](https://github.com/aws-samples/sample-OpenClaw-on-AWS-with-Bedrock) | AWS-native deployment using Amazon Bedrock — no multi-API key management |
 | [constansino/moltbot_qq](https://github.com/constansino/moltbot_qq) | QQ messaging channel support via OneBot v11 (WebSocket) |
+| [sipeed/picoclaw](https://github.com/sipeed/picoclaw) | Ultra-lightweight AI assistant in Go — 10 MB RAM, $10 RISC-V board, 1s boot, single binary (2.1K stars) |
+| [HKUDS/nanobot](https://github.com/HKUDS/nanobot) | Ultra-lightweight OpenClaw alternative in Python — 4K lines, 45 MB RAM, 0.8s cold start, MCP-native (15K+ stars) |
+| [brunobar79/expo-openclaw-chat](https://github.com/brunobar79/expo-openclaw-chat) | Expo / React Native chat SDK for building native iOS/Android OpenClaw clients |
+| [archestra-ai/archestra](https://github.com/archestra-ai/archestra) | OpenClaw for Enterprise — agentic security, MCP registry & orchestrator, A2A (3.5K stars) |
+| [abhi1693/openclaw-mission-control](https://github.com/abhi1693/openclaw-mission-control) | Mission control with RBAC, Kanban board, War Room, transcripts, Telegram outputs |
+| [turmyshevd/openclawgotchi](https://github.com/turmyshevd/openclawgotchi) | AI Tamagotchi on Raspberry Pi — agentic life-form with an E-Ink face |
+| [DarlingtonDeveloper/OpenGlass](https://github.com/DarlingtonDeveloper/OpenGlass) | Real-time AI-powered smart glasses — Meta Ray-Bans + Gemini Live + OpenClaw |
+| [deeqyaqub1-cmd/zero-rules-openclaw](https://github.com/deeqyaqub1-cmd/zero-rules-openclaw) | Deterministic engine for OpenClaw — skips LLM for math/time/files, saves 50-70% on tokens |
+| [RyanLisse/engram](https://github.com/RyanLisse/engram) | Unified multi-agent memory for OpenClaw — local-first, Convex-synced, agent-native |
+| [asafelobotomy/ClosedClaw](https://github.com/asafelobotomy/ClosedClaw) | OpenClaw fork with GTK GUI, Ollama integration, and enhanced lite mode |
+| [MarlBurroW/pinchchat](https://github.com/MarlBurroW/pinchchat) | Sleek, dark-themed webchat UI for OpenClaw agents |
+| [jazzyalex/agent-sessions](https://github.com/jazzyalex/agent-sessions) | Session browser + analytics + limits tracker for Codex CLI, Claude Code, OpenCode, Gemini CLI (245 stars) |
+| [openclaw/barnacle](https://github.com/openclaw/barnacle) | Official OpenClaw companion bot — persistent utility bot |
+| [openclaw/trust](https://github.com/openclaw/trust) | Official open threat model with community-contributed risk assessments and mitigations |
+| [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | Research any topic across Reddit + X from the last 30 days, generates copy-paste prompts (2.5K stars) |
+| [rohunvora/x-research-skill](https://github.com/rohunvora/x-research-skill) | X/Twitter research skill — agentic search, thread following, deep-dives, sourced briefings (630 stars) |
+| [freema/openclaw-mcp](https://github.com/freema/openclaw-mcp) | MCP server bridging Claude.ai to self-hosted OpenClaw with OAuth 2.1 authentication |
+| [beam-cloud/airstore](https://github.com/beam-cloud/airstore) | The filesystem for AI agents — persistent agent storage layer (89 stars) |
 
 ---
 
@@ -1329,6 +1373,28 @@ node --version                     # Must be 22+
 | **khal3d/openclaw** | [GitHub](https://github.com/khal3d/openclaw) | Docker & HELM deployment |
 
 - [Running OpenClaw on Kubernetes - Metoro Blog](https://metoro.io/blog/openclaw-kubernetes)
+
+---
+
+## PicoClaw (RISC-V / Ultra-Lightweight)
+
+[PicoClaw](https://github.com/sipeed/picoclaw) is an ultra-lightweight AI assistant written in Go that runs on less than **10 MB RAM**. Boots in **1 second** on a **$10 RISC-V board** (Sipeed LicheeRV Nano with SOPHGO SG2002). Single binary — no Docker, no Node.js, no Python required.
+
+| Spec | Detail |
+|------|--------|
+| **Language** | Go |
+| **RAM** | < 10 MB |
+| **Hardware** | Sipeed LicheeRV Nano ($10), also ARM64 and x86-64 |
+| **Boot Time** | ~1 second |
+| **Stars** | 2,100+ (gained 1,100+ in 2 days) |
+| **Messaging** | Telegram, Discord, QQ, DingTalk |
+| **AI Providers** | Gemini, Anthropic, OpenRouter, local LLMs |
+| **Features** | Persistent memory, scheduled tasks, web search, multi-provider routing |
+
+> Sipeed claims PicoClaw matches OpenClaw's core features with 1% of the code and 1% of the memory. 95% of the codebase was AI-generated.
+
+- [GitHub - sipeed/picoclaw](https://github.com/sipeed/picoclaw)
+- [CNX Software - PicoClaw runs on just 10MB of RAM](https://www.cnx-software.com/2026/02/10/picoclaw-ultra-lightweight-personal-ai-assistant-run-on-just-10mb-of-ram/)
 
 ---
 
@@ -1378,6 +1444,9 @@ OpenClaw has seen explosive adoption in China with support from major tech compa
 
 | Version | Date | Key Changes |
 |---------|------|-------------|
+| **v2026.2.9** | Feb 9, 2026 | iOS alpha node app, device pairing/phone control plugins, Grok (xAI) web search, agent management RPC |
+| **v2026.2.6** | Feb 6, 2026 | Anthropic Opus 4.6 support, token usage dashboards, Voyage AI embeddings |
+| **v2026.2.3** | Feb 3, 2026 | Performance improvements, bug fixes |
 | **v2026.2.2** | Feb 2026 | Feishu/Lark support, onchain integrations |
 | **v2026.2.1** | Feb 2026 | Security hardening, streaming stability, path traversal fixes |
 | **v2026.1.30** | Jan 30, 2026 | CVE-2026-25593 & CVE-2026-25475 patches |
