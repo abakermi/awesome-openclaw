@@ -1471,8 +1471,8 @@ OpenClaw has seen explosive adoption in China with support from major tech compa
 | Version | Date | Key Changes |
 |---------|------|-------------|
 | **v2026.2.9** | Feb 9, 2026 | iOS alpha node app, device pairing/phone control plugins, Grok (xAI) web search, agent management RPC |
-| **v2026.2.6** | Feb 6, 2026 | Anthropic Opus 4.6 support, token usage dashboards, Voyage AI embeddings |
-| **v2026.2.3** | Feb 3, 2026 | Performance improvements, bug fixes |
+| **v2026.2.6** | Feb 7, 2026 | Anthropic Opus 4.6 support, Voyage AI native memory support |
+| **v2026.2.3** | Feb 5, 2026 | Performance improvements, bug fixes |
 | **v2026.2.2** | Feb 2026 | Feishu/Lark support, onchain integrations |
 | **v2026.2.1** | Feb 2026 | Security hardening, streaming stability, path traversal fixes |
 | **v2026.1.30** | Jan 30, 2026 | CVE-2026-25593 & CVE-2026-25475 patches |
