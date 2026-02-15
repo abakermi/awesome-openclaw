@@ -804,8 +804,7 @@ Full suite access: Gmail, Calendar, Drive, Docs, Sheets. All data stays local â€
 - [Webhooks Docs](https://docs.openclaw.ai/automation/webhook)
 - [Cron Jobs Docs](https://docs.openclaw.ai/automation/cron-jobs)
 - [Heartbeat Docs](https://docs.openclaw.ai/gateway/heartbeat)
-- **[ClawTick](https://clawtick.com/)**: A cloud scheduler for OpenClaw agents.
-- **[ClawTick](https://clawtick.com/)**: A cloud scheduler for OpenClaw agents. ([GitHub](https://github.com/abakermi/clawtick))
+- **[ClawTick](https://clawtick.com/)** â€” Cloud scheduler for OpenClaw agents with performance monitoring and uptime checks.
 
 ### Live Canvas
 
